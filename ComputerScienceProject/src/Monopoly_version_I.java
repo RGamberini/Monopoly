@@ -44,6 +44,8 @@ public class Monopoly_version_I {
     }
  
     public static void main(String[] argv) {
+    	String BoardinfoPath = Monopoly_version_I.class.getClassLoader().getResource("Boardinfo").getPath();
+    	String BoardLayInfoPath = Monopoly_version_I.class.getClassLoader().getResource("BoardLayInfo").getPath();
         start();
     }
 }

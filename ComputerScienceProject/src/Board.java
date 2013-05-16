@@ -14,6 +14,8 @@ public class Board {
 	String[][][] bob = new String[8][3][2];
 	Tile firstTile;
 	UnicodeFont font = null;
+	String BoardinfoPath = Board.class.getClassLoader().getResource("Boardinfo").getPath();
+	String BoardLayInfoPath = Board.class.getClassLoader().getResource("BoardLayInfo").getPath();
 	
 	private void setupFonts() {
 		Font awtFont = new Font("Times New Roman", Font.BOLD, 24);
@@ -31,7 +33,7 @@ public class Board {
 	private void setupArrayBoard() {
 		BufferedReader in = null;
 		try {
-			in = new BufferedReader(new FileReader("C:\\Users\\Rudy\\Documents\\Monopoly_Board.txt"));
+			in = new BufferedReader(new FileReader(BoardinfoPath));
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -58,7 +60,7 @@ public class Board {
 	private void setupBoard() {
 		BufferedReader in = null;
 		try {
-			in = new BufferedReader(new FileReader("C:\\Users\\Rudy\\Documents\\Board.txt"));
+			in = new BufferedReader(new FileReader(BoardLayInfoPath));
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
