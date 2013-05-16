@@ -15,7 +15,7 @@ import org.newdawn.slick.font.effects.ColorEffect;
 public class Board {
 	static int NAME = 0;
 	static int COLOR = 1;
-	String[][][] bob = new String[8][3][2];
+	String[][][] bob = new String[10][4][2];
 	Tile firstTile;
 	UnicodeFont font = null;
 	String BoardinfoPath = Board.class.getClassLoader().getResource("Boardinfo").getPath();
@@ -123,8 +123,8 @@ public class Board {
 							y = lineCount * tileWidth;
 						}
 						else {
-							x = (i / 2) * tileLength;
-							y = lineCount * tileWidth;
+							x = (i / 2) * tileWidth;
+							y = lineCount * tileWidth + 60;
 						}
 						tileName = bob[num1][num2][NAME];
 						tileColor = new float[3];
@@ -151,8 +151,12 @@ public class Board {
 	
 	public void draw() {
 		GL11.glDisable(GL11.GL_TEXTURE_2D);
-		firstTile.draw();
+		//firstTile.draw();
+		for (Tile tile: tileList)
+			tile.draw();
 		GL11.glEnable(GL11.GL_TEXTURE_2D);
-		firstTile.drawName(font);
+		for (Tile tile: tileList)
+			tile.drawName(font);
+		//firstTile.drawName(font);
 	}
 }

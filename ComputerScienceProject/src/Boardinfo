@@ -20,3 +20,9 @@
 6,2,Pennsylvania Avenue,.2 .5 .2
 7,0,Park Place,.12 .12 .8
 7,1,Boardwalk,.12 .12 .8
+8,0,Reading Railroad,.05f .56f .58f
+8,1,Pennsylvania Railroad,.05f .56f .58f
+8,2,B&O Railroad,.05f .56f .58f
+8,3,Short Line,.05f .56f .58f
+9,0,Electric Company,.05f .56f .58f
+9,1,Water Works,.05f .56f .58f
