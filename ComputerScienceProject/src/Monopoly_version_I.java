@@ -7,7 +7,7 @@ public class Monopoly_version_I {
  
     public static void start() {
         try {
-	    Display.setDisplayMode(new DisplayMode(800,600));
+	    Display.setDisplayMode(new DisplayMode(1600,900));
 	    Display.create();
 	} catch (LWJGLException e) {
 	    e.printStackTrace();
@@ -24,17 +24,21 @@ public class Monopoly_version_I {
     GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 	
 	//Tile firstTile = new Tile(100, 100, 150f, 100f, new float[] {1, 0, 0}, new float[] {.54f, .27f, .75f}, "fuck");
-
-	Board Monopoly = new Board();
+    float[] BGcolor = new float[] {.63f, .45f, .27f};
+	Board Monopoly = new Board(new float[] {.63f, .45f, .27f}, new float[]{.05f,  .56f, .58f}, 150, 100);
 	Monopoly.init();
  
 	while (!Display.isCloseRequested()) {
 	    // Clear the screen and depth buffer
 	    GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);	    
 	    GL11.glDisable(GL11.GL_TEXTURE_2D);
-	    //firstTile.draw();
-	    
-	    GL11.glEnable(GL11.GL_TEXTURE_2D);
+	    GL11.glColor3f(BGcolor[0], BGcolor[1], BGcolor[2]);
+		GL11.glBegin(GL11.GL_QUADS);
+	    GL11.glVertex2f(0,0);
+		GL11.glVertex2f(1600,0);
+		GL11.glVertex2f(1600,900);
+		GL11.glVertex2f(0,900);
+	    GL11.glEnd();
 	    //firstTile.drawName(font);
 	    Monopoly.draw();
 	    Display.update();
