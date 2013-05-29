@@ -14,7 +14,11 @@ import static org.lwjgl.opengl.GL11.glTexParameteri;
 
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
 import java.nio.ByteBuffer;
+
+import javax.imageio.ImageIO;
 
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL12;
@@ -23,12 +27,26 @@ import org.lwjgl.opengl.GL12;
 public class TextureHandler {
 	private static final int BYTES_PER_PIXEL = 4;
 	
-	public void init(String path) {
-		BufferedReader in = null;
-		
+	public void readTexture(String path, int x, int y, int width, int length, boolean max) {
+		BufferedImage test = null;
+		if (!max) {
+		try {
+			test = ImageIO.read(new File(path)).getSubimage(x, y, width, length);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		} else {
+			try {
+				test = ImageIO.read(new File(path));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 	
-	public static int loadTexture(BufferedImage image){
+	private int loadTexture(BufferedImage image){
 	      
 	      int[] pixels = new int[image.getWidth() * image.getHeight()];
 	        image.getRGB(0, 0, image.getWidth(), image.getHeight(), pixels, 0, image.getWidth());
