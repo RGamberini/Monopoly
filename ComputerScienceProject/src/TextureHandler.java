@@ -13,6 +13,7 @@ import static org.lwjgl.opengl.GL11.glTexImage2D;
 import static org.lwjgl.opengl.GL11.glTexParameteri;
 
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
 import java.nio.ByteBuffer;
 
 import org.lwjgl.BufferUtils;
@@ -21,7 +22,13 @@ import org.lwjgl.opengl.GL12;
 
 public class TextureHandler {
 	private static final int BYTES_PER_PIXEL = 4;
-	   public static int loadTexture(BufferedImage image){
+	
+	public void init(String path) {
+		BufferedReader in = null;
+		
+	}
+	
+	public static int loadTexture(BufferedImage image){
 	      
 	      int[] pixels = new int[image.getWidth() * image.getHeight()];
 	        image.getRGB(0, 0, image.getWidth(), image.getHeight(), pixels, 0, image.getWidth());
