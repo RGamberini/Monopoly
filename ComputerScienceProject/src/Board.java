@@ -10,29 +10,37 @@ import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.font.effects.ColorEffect;
+import org.newdawn.slick.opengl.Texture;
+import org.newdawn.slick.opengl.TextureLoader;
+import org.newdawn.slick.util.ResourceLoader;
 
 
 public class Board {
-	static int NAME = 0;
-	static int COLOR = 1;
-	String[][][] bob = new String[10][4][2];
+	static int NAME = 0, COLOR = 1, PRICE = 2, ISDOUBLE = 3;
+	String[][][] bob = new String[11][4][4];
 	Tile firstTile;
 	UnicodeFont font = null;
-	String BoardinfoPath = Board.class.getClassLoader().getResource("Boardinfo").getPath();
-	String BoardLayInfoPath = Board.class.getClassLoader().getResource("BoardLayInfo").getPath();
+	//String BoardinfoPath = Board.class.getClassLoader().getResource("Boardinfo").getPath();
+	//String BoardLayInfoPath = Board.class.getClassLoader().getResource("BoardLayInfo").getPath();
+	//String BoardinfoPath = "C:\\Users\\rudy.gamberini\\Documents\\Adobe\\Boardinfo";
+	//String BoardLayInfoPath = "C:\\Users\\rudy.gamberini\\Documents\\Adobe\\BoardLayInfo";
+	String BoardinfoPath = "Boardinfo";
+	String BoardLayInfoPath = "BoardLayInfo";
 	float[] BGcolor, tileColor;
 	float tileLength, tileWidth;
 	List<Tile> tileList = new ArrayList<Tile>();
+	int border = 5;
+	String[] images;
+	Texture[] textures;
 	
 	public Board(float[] BGColor, float[] TileColor, float TileLength, float TileWidth) {
 		BGcolor = BGColor;
 		tileColor = TileColor;
 		tileLength = TileLength;
 		tileWidth = TileWidth;
-		
 	}
 	private void setupFonts() {
-		Font awtFont = new Font("Times New Roman", Font.BOLD, 24);
+		Font awtFont = new Font("Times New Roman", Font.BOLD, 12);
 		try {
 			font = new UnicodeFont(awtFont);
 			font.addAsciiGlyphs();
@@ -42,12 +50,10 @@ public class Board {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}	
+	private void createTile(String Name, float[] Color, float X, float Y, int Oreintation, int Price, int isDouble) {
+		tileList.add(new Tile(X, Y, tileLength, tileWidth, tileColor, Color,  Name, Price, Oreintation, isDouble));
 	}
-	
-	private void createTile(String Name, float[] Color, float X, float Y, int Oreintation) {
-		tileList.add(new Tile(X, Y, tileLength, tileWidth, tileColor, Color,  Name, Oreintation));
-	}
-	
 	private void setupArrayBoard() {
 		BufferedReader in = null;
 		try {
@@ -57,13 +63,18 @@ public class Board {
 			e.printStackTrace();
 		}
 		String text;
-		String[] neo = new String[4];
+		String[] neo = new String[6];
+		int a,b;
 		try {
 			while (in.ready()) { 
 				text = in.readLine();
 				neo = text.split(",");
-				bob[Integer.parseInt(neo[0])][Integer.parseInt(neo[1])][0] = neo[2];
-				bob[Integer.parseInt(neo[0])][Integer.parseInt(neo[1])][1] = neo[3];
+				a = neo[0].charAt(0) - 97;
+				b = neo[1].charAt(0) - 97;
+				bob[a][b][0] = neo[2];
+				bob[a][b][1] = neo[3];
+				bob[a][b][2] = neo[4];
+				bob[a][b][3] = neo[5];
 			}
 			in.close();
 		} catch (NumberFormatException e) {
@@ -89,6 +100,7 @@ public class Board {
 		BufferedReader in = null;
 		String tileName;
 		String[] strTileColor;
+		String strTilePrice;
 		float[] tileColor;
 		try {
 			in = new BufferedReader(new FileReader(BoardLayInfoPath));
@@ -100,7 +112,8 @@ public class Board {
 		int num1, num2;
 		int lineCount = 0, maxLines;
 		int oreintation;
-		float x, y;
+		int isDouble;
+		float x = 0, y = 0;
 		try {
 			maxLines = countLines(BoardLayInfoPath);
 			while (in.ready()) {
@@ -108,30 +121,47 @@ public class Board {
 				for (int i = 0; i < text.length(); i += 2) {
 					twoChar = "" + text.charAt(i) + text.charAt(i + 1);
 					if (!twoChar.equals("--")) {
-						num1 = Integer.parseInt("" + twoChar.charAt(0));
-						num2 = Integer.parseInt("" + twoChar.charAt(1));
+						num1 = twoChar.charAt(0) - 97;
+						num2 = twoChar.charAt(1) - 97;
 						if (lineCount == 0)
 							oreintation = Tile.DOWN;
-						else if (lineCount == maxLines)
+						else if (lineCount == maxLines - 1)
 							oreintation = Tile.UP;
 						else if(i == 0)
 							oreintation = Tile.RIGHT;
 						else
 							oreintation = Tile.LEFT;
-						if (oreintation == 0 || oreintation == 1) {
-							x = (i / 2) * tileWidth;
-							y = lineCount * tileWidth;
-						}
-						else {
-							x = (i / 2) * tileWidth;
-							y = lineCount * tileWidth + 60;
+						switch(oreintation) {
+							case Tile.UP: {
+								x = (i / 2) * (tileWidth + border);
+								y = lineCount * (tileWidth + border) + tileLength;
+								break;
+							}
+							case Tile.DOWN: {
+								x = (i / 2) * (tileWidth + border);
+								y = lineCount * (tileWidth + border) + tileWidth;
+								break;
+							}
+							case Tile.RIGHT: {
+								x = (i / 2) * tileWidth;
+								y = lineCount * (tileWidth + border) + tileLength;
+								break;
+							}
+							
+							case Tile.LEFT: {
+								x = (i / 2) * tileWidth + border;
+								y = lineCount * (tileWidth + border) + tileLength;
+								break;
+							}
 						}
 						tileName = bob[num1][num2][NAME];
 						tileColor = new float[3];
 						strTileColor = bob[num1][num2][COLOR].split(" ");
+						strTilePrice = bob[num1][num2][PRICE];
+						isDouble = Integer.parseInt(bob[num1][num2][ISDOUBLE]);
 						for (int j = 0; j < strTileColor.length; j++)
 							tileColor[j] = Float.parseFloat(strTileColor[j]);
-						createTile(tileName, tileColor, x, y, oreintation);
+						createTile(tileName, tileColor, x + 200, y + 50, oreintation, Integer.parseInt(strTilePrice), isDouble);
 					}
 				}
 				lineCount++;
@@ -141,22 +171,29 @@ public class Board {
 			e.printStackTrace();
 		}
 	}
-	
+	Piece firstPiece;
 	public void init() {
 		setupFonts();
 		setupArrayBoard();
 		setupBoard();
-		firstTile = new Tile(100, 100, 150f, 100f, tileColor, new float[] {.54f, .27f, .75f}, "fuck", 3);
+		//firstTile = new Tile(100, 100, 150f, 100f, tileColor, new float[] {.54f, .27f, .75f}, "fuck", 3);
+		firstPiece = new Piece(12);
+		firstPiece.init();
 	}
 	
 	public void draw() {
 		GL11.glDisable(GL11.GL_TEXTURE_2D);
+		//GL11.glDisable(GL11.GL_BLEND);
 		//firstTile.draw();
 		for (Tile tile: tileList)
 			tile.draw();
 		GL11.glEnable(GL11.GL_TEXTURE_2D);
-		for (Tile tile: tileList)
-			tile.drawName(font);
+		GL11.glEnable(GL11.GL_BLEND);
+    	GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+		for (Tile tile: tileList){
+			tile.drawTexture(font);
+			firstPiece.draw();
+		}
 		//firstTile.drawName(font);
 	}
 }

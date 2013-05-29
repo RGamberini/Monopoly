@@ -1,10 +1,13 @@
+import static org.lwjgl.opengl.GL11.glClearColor;
+
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
  
-public class Monopoly_version_I {
- 
+public class Monopoly_Version_I {
+	static int border = 5;
+	
     public static void start() {
         try {
 	    Display.setDisplayMode(new DisplayMode(1600,900));
@@ -22,10 +25,9 @@ public class Monopoly_version_I {
     GL11.glEnable(GL11.GL_TEXTURE_2D);
     GL11.glEnable(GL11.GL_BLEND);
     GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-	
 	//Tile firstTile = new Tile(100, 100, 150f, 100f, new float[] {1, 0, 0}, new float[] {.54f, .27f, .75f}, "fuck");
     float[] BGcolor = new float[] {.63f, .45f, .27f};
-	Board Monopoly = new Board(new float[] {.63f, .45f, .27f}, new float[]{.05f,  .56f, .58f}, 150, 100);
+	Board Monopoly = new Board(new float[] {.63f, .45f, .27f}, new float[]{.05f,  .56f, .58f}, 100 + border, 50);
 	Monopoly.init();
  
 	while (!Display.isCloseRequested()) {
@@ -48,8 +50,8 @@ public class Monopoly_version_I {
     }
  
     public static void main(String[] argv) {
-    	String BoardinfoPath = Monopoly_version_I.class.getClassLoader().getResource("Boardinfo").getPath();
-    	String BoardLayInfoPath = Monopoly_version_I.class.getClassLoader().getResource("BoardLayInfo").getPath();
+    	String BoardinfoPath = Monopoly_Version_I.class.getClassLoader().getResource("Boardinfo").getPath();
+    	String BoardLayInfoPath = Monopoly_Version_I.class.getClassLoader().getResource("BoardLayInfo").getPath();
         start();
     }
 }
