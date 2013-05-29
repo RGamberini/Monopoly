@@ -1,0 +1,32 @@
+a,a,Mediterranean Avenue,.54 .27 .75,60,0
+a,b,Baltic Avenue,.54 .27 .75,60,0
+b,a,Oriental Avenue,.76 .89 .98,100,0
+b,b,Vermont Avenue,.76 .89 .98,100,0
+b,c,Connecticut Avenue,.76 .89 .98,120,0
+c,a,St. Charles Place,1 0 1,140,0
+c,b,States Avenue,1 0 1,140,0
+c,c,Virginia Avenue,1 0 1,160,0
+d,a,St. James Place,1 .5 0,180,0
+d,b,Tennessee Avenue,1 .5 0,180,0
+d,c,New York Avenue,1 .5 0,200,0
+e,a,Kentucky Avenue,1 0 0,220,0
+e,b,Indiana Avenue,1 0 0,220,0
+e,c,Illinois Avenue,1 0 0,240,0
+f,a,Atlantic Avenue,1 1 0,260,0
+f,b,Ventnor Avenue,1 1 0,260,0
+f,c,Marvin Gardens,1 1 0,280,0
+g,a,Pacific Avenue,.2 .5 .2,300,0
+g,b,North Carolina Avenue,.2 .5 .2,300,0
+g,c,Pennsylvania Avenue,.2 .5 .2,320,0
+h,a,Park Place,.12 .12 .8,350,0
+h,b,Boardwalk,.12 .12 .8,400,0
+i,a,Reading Railroad,.05f .56f .58f,200,0
+i,b,Pennsylvania Railroad,.05f .56f .58f,200,0
+i,c,B&O Railroad,.05f .56f .58f,200,0
+i,d,Short Line,.05f .56f .58f,200,0
+j,a,Electric Company,.05f .56f .58f,150,0
+j,b,Water Works,.05f .56f .58f,150,0
+k,a, ,.05f .56f .58f,0,1
+k,b, ,.05f .56f .58f,0,1
+k,c, ,.05f .56f .58f,0,1
+k,d, ,.05f .56f .58f,0,1
